@@ -101,7 +101,7 @@ public class indexer {
             objectOutputStream.writeObject(IndexMap);
             objectOutputStream.close();
 
-            FileInputStream fileInputStream = new FileInputStream(output_file);
+            /*FileInputStream fileInputStream = new FileInputStream(output_file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Object object = objectInputStream.readObject();
             objectInputStream.close();
@@ -114,7 +114,7 @@ public class indexer {
                 String key = it.next();
                 String value = (String)hashMap.get(key);
                 System.out.println(key + " → " + value);
-            }
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
         }
