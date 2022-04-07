@@ -23,7 +23,7 @@ public class searcher{
     }
     public void printTitle(){
         try {
-            double[] Qid = CalcSim(query);
+            double[] Qid = InnerProduct(query);
 
             //title가져오기 위해
             File file = new File("./Collection.xml");
@@ -116,7 +116,7 @@ public class searcher{
                     String[] split = value[i].split(" ");
                     for (int j = 0; j < split.length; j++) {
                         if (j % 2 == 0) { // id일때
-                            Qid[j / 2] += Math.round((Float.parseFloat(split[j + 1]) * QTF)*100)/100.0; //
+                            Qid[j / 2] += Math.round((Double.parseDouble(split[j + 1]) * QTF)*100)/100.0; //
                         }
                     }
                 }
