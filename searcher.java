@@ -24,7 +24,7 @@ public class searcher {
     }
     public void printTitle(){
         try {
-            float[] Qid = CalcSim(query);
+            double[] Qid = CalcSim(query);
 
             //title가져오기 위해
             File file = new File("./Collection.xml");
@@ -93,8 +93,8 @@ public class searcher {
         }
     }
 
-    public float[] CalcSim(String query) {
-        float[] Qid = {0,0,0,0,0};
+    public double[] InnerProduct(String query) {
+        double[] Qid = {0,0,0,0,0};
         try{
             FileInputStream fileInputStream = new FileInputStream(data_path);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -127,5 +127,48 @@ public class searcher {
             e.printStackTrace();
         }
         return Qid;
+    }
+    public double[] CalcSim(String query) {
+        double[] Qid = InnerProduct(query);
+        double[] Sim = {0,0,0,0,0};
+        double QSize = 0;
+        double[] idSize = {0,0,0,0,0};
+        try{
+            FileInputStream fileInputStream = new FileInputStream(data_path);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            Object object = objectInputStream.readObject();
+            objectInputStream.close();
+
+            HashMap hashMap = (HashMap) object;
+            KeywordExtractor ke = new KeywordExtractor();
+            KeywordList kl = ke.extractKeyword(query, true);
+
+            String[] key = new String[kl.size()];
+            String[] value = new String[kl.size()];
+
+            for (int i = 0; i < kl.size(); i++) {
+                int QTF = 0;
+                Keyword kwrd = kl.get(i);
+                key[i] = kwrd.getString(); //key값 ex) 라면, 분말,
+                QTF = kwrd.getCnt(); // 13, 1
+                if(hashMap.containsKey(key[i])) {
+                    value[i] = (String) hashMap.get(key[i]); // ex) 0 0.0 1 20.92 2 0.0 3 0.0 4 0.0 // 0 0.0 1 1.61 2 0.0 3 0.0 4 0.0
+                    String[] split = value[i].split(" ");
+                    for (int j = 0; j < split.length; j++) {
+                        if (j % 2 == 0) { // id일때
+                            idSize[j/2] += Math.pow(Math.round(Double.parseDouble(split[j + 1])*100)/100.0,2);
+                        }
+                    }
+                }
+                QSize += Math.pow(QTF,2);
+            }
+            for(int i =0 ;i<Qid.length;i++){//5번반복
+                Sim[i] = Qid[i] /(Math.sqrt(QSize) * Math.sqrt(idSize[i]));
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Sim;
     }
 }
