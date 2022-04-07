@@ -12,19 +12,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
-import java.util.Iterator;
 
-public class searcher {
+public class searcher{
 
     private String data_path;
     private String query;
-    public searcher(String path,String query) {
+    public searcher(String path, String query) {
         this.data_path = path;
         this.query = query;
     }
     public void printTitle(){
         try {
-            float[] Qid = CalcSim(query);
+            double[] Qid = CalcSim(query);
 
             //title가져오기 위해
             File file = new File("./Collection.xml");
@@ -49,7 +48,6 @@ public class searcher {
                 if(Qid[i]>max){
                     max = Qid[i];
                     maxIndex =i;
-
                 }
             }
             if(max != 0) {
@@ -93,8 +91,8 @@ public class searcher {
         }
     }
 
-    public float[] CalcSim(String query) {
-        float[] Qid = {0,0,0,0,0};
+    public double[] InnerProduct(String query) {
+        double[] Qid = {0,0,0,0,0};
         try{
             FileInputStream fileInputStream = new FileInputStream(data_path);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
