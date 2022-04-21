@@ -24,5 +24,9 @@ public class kuir {
             searcher searcher = new searcher(path,query);
             searcher.printTitle();
         }
+        else if(command.equals("-m")){
+            MidTerm MidTerm = new MidTerm(path,query);
+            MidTerm.showSnippet();
+        }
     }
 }
