@@ -65,7 +65,7 @@ public class MidTerm {
                             matching[j]++;
                             if(temp.length() == 30){
                                 snippet[j] = temp;
-
+                                temp = null;
                             }
                         }
 
