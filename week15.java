@@ -9,12 +9,14 @@ import java.net.URLEncoder;
 import java.util.Scanner;
 public class week15 {
     public static void main(String[] args) {
-        String clientId = "pd6l1zRpBbyIB6VOmdLb";// 애플리케이션 클라이언트 아이디값
-        String clientSecret = "QF_9ftHiYm";// 애플리케이션 클라이언트 시크릿값
 
         Scanner sc = new Scanner(System.in);
         System.out.print("검색어를 입력하세요: ");
         String query = sc.nextLine();
+
+        String clientId = "pd6l1zRpBbyIB6VOmdLb";// 애플리케이션 클라이언트 아이디값
+        String clientSecret = "QF_9ftHiYm";// 애플리케이션 클라이언트 시크릿값
+
 
         try{
 
@@ -37,12 +39,12 @@ public class week15 {
             }
             String inputLine;
             StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) { // 한 줄 씩 읽어 옴
+            while ((inputLine = br.readLine()) != null) { // 한 줄 씩 읽어옴
                 response.append(inputLine);
             }
             br.close();
 
-            //System.out.println(response);
+            //System.out.println(response);//"lastBuildDate","total","start","display","items"{"title","link","image","subtitle","pubDate","director","actor","userRating"}
 
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(response.toString());
